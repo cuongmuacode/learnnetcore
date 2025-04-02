@@ -4,16 +4,15 @@ using LearnNetCore.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LearnNetCore.Application
+namespace LearnNetCore.Application;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static IServiceCollection AddLearnNetCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddLearnNetCoreServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddLearnNetCoreDbServices(configuration);
-            services.AddScoped<IStockRepository, StockRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
-            return services;
-        }
+        services.AddLearnNetCoreDbServices(configuration);
+        services.AddScoped<IStockRepository, StockRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
+        return services;
     }
 }

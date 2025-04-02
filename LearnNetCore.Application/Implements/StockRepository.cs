@@ -19,7 +19,7 @@ public class StockRepository : IStockRepository
     {
         var stock = await FindAsync(id);
         if (stock == null) return stock;
-        _dbContext.Remove(stock);
+        _dbContext.Stocks.Remove(stock);
         return stock;
     }
 
@@ -31,16 +31,17 @@ public class StockRepository : IStockRepository
 
     public async Task<IEnumerable<StockEntity>> GetAllAsync(StockQueryModel queryModel)
     {
-        var query = _dbContext.Stocks.AsQueryable();
+        IQueryable<StockEntity> query = _dbContext.Stocks.AsQueryable<StockEntity>();
         if (!string.IsNullOrEmpty(queryModel.CompanyName))
         {
             query = query.Where(x => x.CompanyName.Contains(queryModel.CompanyName));
         }
-        if (queryModel.Id != null || queryModel.Id != Guid.Empty)
+        if (queryModel.Id != null && queryModel.Id != Guid.Empty)
         {
-            query = query.Where(x => x.Id == queryModel.Id);
+            query = query.Where(x => x.Id == queryModel.Id.Value);
         }
         return await query.ToListAsync();
+
     }
 
     public async Task<StockEntity> SaveAsync(StockEntity stock)

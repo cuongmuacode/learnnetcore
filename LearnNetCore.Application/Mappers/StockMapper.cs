@@ -1,6 +1,7 @@
-﻿using LearnNetCore.Domain;
+﻿using LearnNetCore.Application.Models;
+using LearnNetCore.Domain;
 
-namespace LearnNetCore.Application.Models;
+namespace LearnNetCore.Application.Mappers;
 
 public static class StockMapper
 {

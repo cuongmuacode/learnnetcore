@@ -9,5 +9,4 @@ public interface IStockRepository
     Task<StockEntity?> FindAsync(Guid id);
     Task<StockEntity> SaveAsync(StockEntity stock);
     Task<StockEntity?> DeleteAsync(Guid id);
-
 }
