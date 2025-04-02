@@ -10,7 +10,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "https": {
+    "LearnNetCore.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
