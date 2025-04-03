@@ -1,5 +1,4 @@
-﻿using LearnNetCore.Domain;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LearnNetCore.Application.Models;
 
@@ -14,5 +13,5 @@ public class StockResponseModel
     public decimal LastDiv { get; set; }
     public string Industry { get; set; } = string.Empty;
     public long MarketCapitalization { get; set; }
-    public List<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
+    public List<CommentResponseModel> Comments { get; set; } = new List<CommentResponseModel>();
 }

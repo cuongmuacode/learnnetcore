@@ -1,6 +1,5 @@
 ﻿namespace LearnNetCore.Application.Models;
 
-public class CommentQueryModel
+public class CommentQueryModel : BaseQueryModel
 {
-    public Guid? Id { get; set; }
 }

@@ -1,7 +1,9 @@
-﻿using LearnNetCore.Application.Interfaces;
+﻿using LearnNetCore.Application;
+using LearnNetCore.Application.Interfaces;
 using LearnNetCore.Application.Mappers;
 using LearnNetCore.Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace LearnNetCore.Api.Controllers;
 
@@ -44,7 +46,7 @@ public class StockController : ControllerBase
     /// <param name="stock"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(StockResponseModel), StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] StockRequestModel stock)
     {
@@ -62,12 +64,19 @@ public class StockController : ControllerBase
     /// <param name="queryModel"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    [ProducesResponseType(typeof(List<StockResponseModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Pagination<StockResponseModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync([FromBody] StockQueryModel queryModel)
     {
         var stocks = await _stockRepository.GetAllAsync(queryModel);
-        var res = stocks.Select(x => StockMapper.ToStockResponseModel(x));
-        return Ok(res);
+        var res = stocks.Items.Select(x => StockMapper.ToStockResponseModel(x));
+        return Ok(
+            new Pagination<StockResponseModel>(
+                res,
+                stocks.TotalCount,
+                stocks.TotalPage,
+                stocks.CurrentPage,
+                stocks.PageSize)
+        );
     }
 
     /// <summary>
@@ -76,7 +85,7 @@ public class StockController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [ProducesResponseType(typeof(StockResponseModel), StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {

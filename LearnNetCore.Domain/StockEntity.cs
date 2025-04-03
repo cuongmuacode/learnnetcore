@@ -18,6 +18,5 @@ namespace LearnNetCore.Domain
         public string Industry { get; set; } = string.Empty;
         public long MarketCapitalization { get; set; }
 
-        public List<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
     }
 }

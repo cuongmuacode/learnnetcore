@@ -29,7 +29,7 @@ public class CommentRepository : ICommentRepository
         return comment;
     }
 
-    public async Task<IEnumerable<CommentEntity>> GetAllAsync(CommentQueryModel queryModel)
+    public async Task<Pagination<CommentEntity>> GetAllAsync(CommentQueryModel queryModel)
     {
         IQueryable<CommentEntity> query = _dbContext.Comments.AsQueryable<CommentEntity>();
 
@@ -37,8 +37,19 @@ public class CommentRepository : ICommentRepository
         {
             query = query.Where(x => x.Id == queryModel.Id.Value);
         }
+        var totalCount = await query.CountAsync();
 
-        return await query.ToListAsync();
+        var items = await query
+            .OrderBy(x => x.Id)
+            .Skip(queryModel.CurrentPage)
+            .Take(queryModel.PageSize).ToListAsync();
+
+        return new Pagination<CommentEntity>(
+            items,
+            totalCount,
+            (int)Math.Ceiling((double)totalCount / queryModel.PageSize),
+            queryModel.CurrentPage,
+            queryModel.PageSize);
     }
 
     public async Task<CommentEntity> SaveAsync(CommentEntity comment)

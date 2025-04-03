@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Domain", "1. Domain", "{B110079F-F7F9-4955-986A-48FF20A9B686}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Host", "4. Host", "{269B3DB0-A7BC-44BC-BCF2-28A5B864AFBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Database", "3. Database", "{052DBCA6-293F-485E-A9DD-8D46187FB9E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. UseCase", "2. UseCase", "{3E2B2F3B-7725-471A-84C7-E5E59FD49C92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Tools", "5. Tools", "{4B3D6FA3-03CD-4178-8DC3-760300A2C7E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.Domain", "LearnNetCore.Domain\LearnNetCore.Domain.csproj", "{EA2B16A0-867D-4823-93BC-D5C676D003BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.Domain.Share", "LearnNetCore.Domain.Share\LearnNetCore.Domain.Share.csproj", "{A74A3557-93E8-4E00-B75A-94EBFFDF7D5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.Application", "LearnNetCore.Application\LearnNetCore.Application.csproj", "{99D79D73-6229-444B-AE5C-0153D2C33CE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.EntityFrameworkCore", "LearnNetCore.EntityFrameworkCore\LearnNetCore.EntityFrameworkCore.csproj", "{893DA9F5-A592-4709-96CC-2499227D9889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.Api", "LearnNetCore.Api\LearnNetCore.Api.csproj", "{803B5B20-3FDB-453A-AE7C-7DD4156FE3BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.Web", "LearnNetCore.Web\LearnNetCore.Web.csproj", "{0EDD1372-79CE-4F9B-86E7-CEBDCF5CD6B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnNetCore.ToolLearnLinq", "LearnNetCore.ToolLearnLinq\LearnNetCore.ToolLearnLinq.csproj", "{179B10CF-35A1-4A2B-BF36-341A2A3D5F16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA2B16A0-867D-4823-93BC-D5C676D003BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA2B16A0-867D-4823-93BC-D5C676D003BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA2B16A0-867D-4823-93BC-D5C676D003BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA2B16A0-867D-4823-93BC-D5C676D003BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A74A3557-93E8-4E00-B75A-94EBFFDF7D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A74A3557-93E8-4E00-B75A-94EBFFDF7D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A74A3557-93E8-4E00-B75A-94EBFFDF7D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A74A3557-93E8-4E00-B75A-94EBFFDF7D5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99D79D73-6229-444B-AE5C-0153D2C33CE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99D79D73-6229-444B-AE5C-0153D2C33CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99D79D73-6229-444B-AE5C-0153D2C33CE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99D79D73-6229-444B-AE5C-0153D2C33CE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893DA9F5-A592-4709-96CC-2499227D9889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893DA9F5-A592-4709-96CC-2499227D9889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893DA9F5-A592-4709-96CC-2499227D9889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893DA9F5-A592-4709-96CC-2499227D9889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803B5B20-3FDB-453A-AE7C-7DD4156FE3BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803B5B20-3FDB-453A-AE7C-7DD4156FE3BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803B5B20-3FDB-453A-AE7C-7DD4156FE3BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803B5B20-3FDB-453A-AE7C-7DD4156FE3BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EDD1372-79CE-4F9B-86E7-CEBDCF5CD6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EDD1372-79CE-4F9B-86E7-CEBDCF5CD6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EDD1372-79CE-4F9B-86E7-CEBDCF5CD6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EDD1372-79CE-4F9B-86E7-CEBDCF5CD6B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{179B10CF-35A1-4A2B-BF36-341A2A3D5F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{179B10CF-35A1-4A2B-BF36-341A2A3D5F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{179B10CF-35A1-4A2B-BF36-341A2A3D5F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{179B10CF-35A1-4A2B-BF36-341A2A3D5F16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA2B16A0-867D-4823-93BC-D5C676D003BD} = {B110079F-F7F9-4955-986A-48FF20A9B686}
+		{A74A3557-93E8-4E00-B75A-94EBFFDF7D5C} = {B110079F-F7F9-4955-986A-48FF20A9B686}
+		{99D79D73-6229-444B-AE5C-0153D2C33CE7} = {3E2B2F3B-7725-471A-84C7-E5E59FD49C92}
+		{893DA9F5-A592-4709-96CC-2499227D9889} = {052DBCA6-293F-485E-A9DD-8D46187FB9E8}
+		{803B5B20-3FDB-453A-AE7C-7DD4156FE3BA} = {269B3DB0-A7BC-44BC-BCF2-28A5B864AFBC}
+		{0EDD1372-79CE-4F9B-86E7-CEBDCF5CD6B6} = {269B3DB0-A7BC-44BC-BCF2-28A5B864AFBC}
+		{179B10CF-35A1-4A2B-BF36-341A2A3D5F16} = {4B3D6FA3-03CD-4178-8DC3-760300A2C7E2}
+	EndGlobalSection
+EndGlobal

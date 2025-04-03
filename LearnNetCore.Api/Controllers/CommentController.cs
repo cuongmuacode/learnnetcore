@@ -1,4 +1,5 @@
-﻿using LearnNetCore.Application.Interfaces;
+﻿using LearnNetCore.Application;
+using LearnNetCore.Application.Interfaces;
 using LearnNetCore.Application.Mappers;
 using LearnNetCore.Application.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +45,7 @@ public class CommentController : ControllerBase
     /// <param name="comment"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    [HttpPut("{id}")]
+    [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(CommentResponseModel), StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] CommentRequestModel comment)
     {
@@ -62,12 +63,19 @@ public class CommentController : ControllerBase
     /// <param name="queryModel"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    [ProducesResponseType(typeof(List<CommentResponseModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Pagination<CommentResponseModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync([FromBody] CommentQueryModel queryModel)
     {
         var comments = await _commentRepository.GetAllAsync(queryModel);
-        var res = comments.Select(x => x.ToCommentResponseModel());
-        return Ok(res);
+        var res = comments.Items.Select(x => x.ToCommentResponseModel());
+        return Ok(
+            new Pagination<CommentResponseModel>(
+                res,
+                comments.TotalCount,
+                comments.TotalPage,
+                comments.CurrentPage,
+                comments.PageSize)
+        );
     }
 
     /// <summary>
@@ -76,7 +84,7 @@ public class CommentController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:guid}")]
     [ProducesResponseType(typeof(CommentResponseModel), StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {

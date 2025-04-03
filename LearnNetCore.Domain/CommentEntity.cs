@@ -13,5 +13,4 @@ public class CommentEntity
     public string Content { get; set; } = string.Empty;
     public DateTime CreatedOnDate { get; set; } = DateTime.Now;
     public Guid? StockId { get; set; }
-    public StockEntity Stock { get; set; }
 }

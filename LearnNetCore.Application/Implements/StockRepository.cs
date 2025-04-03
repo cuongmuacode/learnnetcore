@@ -29,7 +29,7 @@ public class StockRepository : IStockRepository
         return stock;
     }
 
-    public async Task<IEnumerable<StockEntity>> GetAllAsync(StockQueryModel queryModel)
+    public async Task<Pagination<StockEntity>> GetAllAsync(StockQueryModel queryModel)
     {
         IQueryable<StockEntity> query = _dbContext.Stocks.AsQueryable<StockEntity>();
         if (!string.IsNullOrEmpty(queryModel.CompanyName))
@@ -40,7 +40,19 @@ public class StockRepository : IStockRepository
         {
             query = query.Where(x => x.Id == queryModel.Id.Value);
         }
-        return await query.ToListAsync();
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .OrderBy(x => x.Id)
+            .Skip(queryModel.CurrentPage)
+            .Take(queryModel.PageSize).ToListAsync();
+
+        return new Pagination<StockEntity>(
+            items,
+            totalCount,
+            (int)Math.Ceiling((double)totalCount / queryModel.PageSize),
+            queryModel.CurrentPage,
+            queryModel.PageSize);
 
     }
 

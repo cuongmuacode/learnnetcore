@@ -29,7 +29,6 @@ public static class StockMapper
             MarketCapitalization = entity.MarketCapitalization,
             Purchase = entity.Purchase,
             Symbol = entity.Symbol,
-            Comments = entity.Comments
         };
     }
 

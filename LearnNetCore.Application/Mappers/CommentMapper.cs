@@ -25,7 +25,6 @@ public static class CommentMapper
             StockId = entity.StockId,
             CreatedOnDate = entity.CreatedOnDate,
             Title = entity.Title,
-            Stock = entity.Stock
         };
     }
 
