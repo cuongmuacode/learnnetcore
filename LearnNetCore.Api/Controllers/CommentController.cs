@@ -2,6 +2,7 @@
 using LearnNetCore.Application.Interfaces;
 using LearnNetCore.Application.Mappers;
 using LearnNetCore.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LearnNetCore.Api.Controllers;

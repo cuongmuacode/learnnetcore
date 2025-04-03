@@ -13,6 +13,7 @@ public static class ServiceCollectionExtensions
         services.AddLearnNetCoreDbServices(configuration);
         services.AddScoped<IStockRepository, StockRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<ITokenService, TokenService>();
         return services;
     }
 }
