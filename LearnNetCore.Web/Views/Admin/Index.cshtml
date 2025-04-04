@@ -1,0 +1,26 @@
+﻿@using LearnNetCore.Application.Identities
+@model List<ApplicationUser>
+
+<h2>Danh sách người dùng</h2>
+<a asp-action="Register" asp-controller="Account" class="btn btn-success mb-3">+ Thêm User</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-sm btn-warning">Phân quyền</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -94,5 +94,4 @@ public class StockController : ControllerBase
         var res = stock.ToStockResponseModel();
         return Ok(res);
     }
-
 }

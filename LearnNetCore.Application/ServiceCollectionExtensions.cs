@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddLearnNetCoreServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddLearnNetCoreDbServices(configuration);
+        services.AddSingleton<ICacheService, MemoryCacheService>();
         services.AddScoped<IStockRepository, StockRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<ITokenService, TokenService>();

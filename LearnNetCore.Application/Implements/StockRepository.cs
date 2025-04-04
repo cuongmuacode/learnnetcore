@@ -9,10 +9,13 @@ namespace LearnNetCore.Application.Implements;
 public class StockRepository : IStockRepository
 {
     private readonly ApplicationDbContext _dbContext;
+    private readonly ICacheService _cacheService;
+    private const string CacheKey = "StockList";
 
-    public StockRepository(ApplicationDbContext dbContext)
+    public StockRepository(ApplicationDbContext dbContext, ICacheService cacheService)
     {
         _dbContext = dbContext;
+        _cacheService = cacheService;
     }
 
     public async Task<StockEntity?> DeleteAsync(Guid id)
@@ -20,10 +23,20 @@ public class StockRepository : IStockRepository
         var stock = await FindAsync(id);
         if (stock == null) return stock;
         _dbContext.Stocks.Remove(stock);
+        InvalidCache(stock.Id);
         return stock;
     }
 
     public async Task<StockEntity?> FindAsync(Guid id)
+    {
+        var key = BuildCacheKey(id);
+        return await _cacheService.GetOrCreateAsync(key, async () =>
+        {
+            var stock = await FindWithoutCacheAsync(id);
+            return stock;
+        });
+    }
+    public async Task<StockEntity?> FindWithoutCacheAsync(Guid id)
     {
         var stock = await _dbContext.Stocks.FirstOrDefaultAsync(x => x.Id == id);
         return stock;
@@ -58,7 +71,7 @@ public class StockRepository : IStockRepository
 
     public async Task<StockEntity> SaveAsync(StockEntity stock)
     {
-        var exist = await FindAsync(stock.Id);
+        var exist = await FindWithoutCacheAsync(stock.Id);
         if (exist == null)
         {
             exist = stock;
@@ -75,6 +88,18 @@ public class StockRepository : IStockRepository
             _dbContext.Stocks.Update(exist);
         }
         await _dbContext.SaveChangesAsync();
+
+        InvalidCache(stock.Id);
+
         return exist;
+    }
+    private string BuildCacheKey(Guid id)
+    {
+        return CacheKey + id;
+    }
+    private void InvalidCache(Guid id)
+    {
+        var key = BuildCacheKey(id);
+        _cacheService.Remove(key);
     }
 }

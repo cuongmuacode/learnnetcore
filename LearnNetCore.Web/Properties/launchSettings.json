@@ -9,7 +9,7 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5074"
     },
-    "https": {
+    "LearnNetCore.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
