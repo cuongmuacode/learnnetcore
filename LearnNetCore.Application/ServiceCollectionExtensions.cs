@@ -1,5 +1,6 @@
-﻿using LearnNetCore.Application.Implements;
-using LearnNetCore.Application.Interfaces;
+﻿using LearnNetCore.Application.Articles;
+using LearnNetCore.Application.Cache;
+using LearnNetCore.Application.Indenties;
 using LearnNetCore.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +13,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddLearnNetCoreDbServices(configuration);
         services.AddSingleton<ICacheService, MemoryCacheService>();
-        services.AddScoped<IStockRepository, StockRepository>();
-        services.AddScoped<ICommentRepository, CommentRepository>();
+        services.AddScoped<IArticleRepository, ArticleRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITokenService, TokenService>();
         return services;
     }

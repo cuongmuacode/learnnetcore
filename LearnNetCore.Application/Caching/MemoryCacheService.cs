@@ -1,8 +1,7 @@
-﻿using LearnNetCore.Application.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Internal;
 
-namespace LearnNetCore.Application.Implements;
+namespace LearnNetCore.Application.Cache;
 
 public class MemoryCacheService : ICacheService
 {

@@ -3,7 +3,6 @@ using LearnNetCore.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 
 namespace LearnNetCore.EntityFrameworkCore;
 
@@ -13,8 +12,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<StockEntity> Stocks { get; set; }
-    public DbSet<CommentEntity> Comments { get; set; }
+    public DbSet<ArticleEntity> Articles { get; set; }
+    public DbSet<CategoryEntity> Categories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

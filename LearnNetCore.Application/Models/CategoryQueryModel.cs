@@ -1,5 +1,5 @@
 ﻿namespace LearnNetCore.Application.Models;
 
-public class CommentQueryModel : BaseQueryModel
+public class CategoryQueryModel : BaseQueryModel
 {
 }

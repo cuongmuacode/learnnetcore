@@ -1,4 +1,4 @@
-﻿namespace LearnNetCore.Application.Interfaces;
+﻿namespace LearnNetCore.Application.Cache;
 
 public interface ICacheService
 {

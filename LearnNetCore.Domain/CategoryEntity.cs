@@ -3,14 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LearnNetCore.Domain;
 
-[Table("Comments")]
-public class CommentEntity
+[Table("Categories")]
+public class CategoryEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
-    public string Title { get; set; } = string.Empty;
+    [StringLength(50)]
+    public string Code { get; set; }
+    [Required]
+    [StringLength(255)]
+    public string Name { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
-    public DateTime CreatedOnDate { get; set; } = DateTime.Now;
-    public Guid? StockId { get; set; }
+    public string Description { get; set; }
+    public string UserId { get; set; }
+
 }

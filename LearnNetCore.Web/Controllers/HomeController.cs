@@ -15,7 +15,15 @@ namespace LearnNetCore.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         public IActionResult Privacy()

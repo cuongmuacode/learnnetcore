@@ -25,7 +25,12 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
-        if (!ModelState.IsValid) return View(model);
+        if (!ModelState.IsValid)
+        {
+            ModelState.AddModelError("", "No registered users were found for this email address.");
+            ViewBag.Message = "No register users were found for this email address.";
+            return View();
+        }
 
         var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
         if (result.Succeeded)
