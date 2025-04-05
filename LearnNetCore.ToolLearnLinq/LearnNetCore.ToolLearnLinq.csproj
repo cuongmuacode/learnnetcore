@@ -29,6 +29,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\LearnNetCore.Application\LearnNetCore.Application.csproj" />
+		<ProjectReference Include="..\LearnNetCore.EntityFrameworkCore\LearnNetCore.EntityFrameworkCore.csproj" />
 	</ItemGroup>
 
 </Project>

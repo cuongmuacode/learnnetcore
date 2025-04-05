@@ -15,19 +15,35 @@ namespace LearnNetCore.Web.Controllers
             _articleService = articleService;
         }
 
-        public async Task<IActionResult> Index(int currentPage = 1)
+        public async Task<IActionResult> Update(Guid? id)
+        {
+            if (id != null)
+            {
+                var article = await _articleService.FindAsync(id.Value);
+                return View(article?.ToArticleRequestModel() ?? new ArticleRequestModel());
+            }
+
+            return View(new ArticleRequestModel());
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrCreate(
+             ArticleRequestModel article)
+        {
+            await _articleService.SaveAsync(article.ToArticleEntity(), string.Empty);
+            return RedirectToAction("Index", "Article");
+        }
+
+        public async Task<IActionResult> Index(ArticleQueryModel queryModel)
         {
             const int pageSize = 10;
-            var result = await _articleService.GetAllAsync(new ArticleQueryModel
-            {
-                CurrentPage = currentPage,
-                PageSize = pageSize
-            });
+                var result = await _articleService.GetAllAsync(queryModel);
             var model = new ArticleViewModel
             {
-                Articles = result.Items.Select(x =>
-                    x.ToArticleResponseModel()).ToList(),
-                CurrentPage = currentPage,
+                Articles = result?.Items?.Select(x =>
+                    x.ToArticleResponseModel())?.ToList(),
+                CurrentPage = queryModel.CurrentPage,
                 TotalPages = result.TotalPage
             };
 

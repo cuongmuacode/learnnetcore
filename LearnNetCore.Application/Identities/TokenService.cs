@@ -1,5 +1,4 @@
-﻿using LearnNetCore.Application.Identities;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LearnNetCore.Application.Indenties;
+namespace LearnNetCore.Application.Identities;
 
 public class TokenService : ITokenService
 {

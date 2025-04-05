@@ -1,6 +1,4 @@
 ﻿using LearnNetCore.Application;
-using LearnNetCore.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

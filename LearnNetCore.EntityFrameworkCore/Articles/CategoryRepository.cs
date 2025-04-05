@@ -1,10 +1,11 @@
-﻿using LearnNetCore.Application.Articles;
+﻿using LearnNetCore.Application;
+using LearnNetCore.Application.Articles;
 using LearnNetCore.Application.Models;
 using LearnNetCore.Domain;
 using LearnNetCore.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace LearnNetCore.Application;
+namespace LearnNetCore.EntityFrameworkCore.Articles;
 
 public class CategoryRepository : ICategoryRepository
 {
@@ -57,7 +58,10 @@ public class CategoryRepository : ICategoryRepository
         var exist = await FindAsync(category.Id);
         if (exist == null)
         {
-            category.UserId = userId;
+            category.CreatedUserId = userId;
+            category.LastModifiedUserId = userId;
+            category.CreatedOnDate = DateTime.UtcNow;
+            category.LastModifiedOnDate = DateTime.UtcNow;
 
             exist = category;
             _dbContext.Categories.Add(category);
@@ -67,8 +71,10 @@ public class CategoryRepository : ICategoryRepository
             exist.Content = category.Content;
             exist.Description = category.Description;
             exist.Name = category.Name;
-            exist.UserId = userId;
-
+            exist.CreatedUserId = userId;
+            exist.LastModifiedUserId = userId;
+            exist.LastModifiedOnDate = DateTime.UtcNow;
+            exist.CreatedOnDate = category.CreatedOnDate;
             _dbContext.Categories.Update(exist);
         }
         await _dbContext.SaveChangesAsync();

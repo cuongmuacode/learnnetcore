@@ -11,30 +11,30 @@ namespace LearnNetCore.Api.Controllers;
 /// 
 /// </summary>
 [ApiController]
-[Route("api/stocks")]
-public class StockController : ControllerBase
+[Route("api/articles")]
+public class ArticleController : ControllerBase
 {
-    private readonly IArticleRepository _stockRepository;
+    private readonly IArticleRepository _articleRepository;
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="stockRepository"></param>
-    public StockController(IArticleRepository stockRepository)
+    /// <param name="articleRepository"></param>
+    public ArticleController(IArticleRepository articleRepository)
     {
-        _stockRepository = stockRepository;
+        _articleRepository = articleRepository;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="stock"></param>
+    /// <param name="article"></param>
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(ArticleResponseModel), StatusCodes.Status200OK)]
-    public async Task<IActionResult> CreateAsync([FromBody] ArticleRequestModel stock)
+    public async Task<IActionResult> CreateAsync([FromBody] ArticleRequestModel article)
     {
-        var stockEntity = stock.ToArticleEntity();
-        var result = await _stockRepository.SaveAsync(stockEntity);
+        var articleEntity = article.ToArticleEntity();
+        var result = await _articleRepository.SaveAsync(articleEntity, string.Empty);
         var res = result.ToArticleResponseModel();
         return Ok(res);
     }
@@ -43,17 +43,17 @@ public class StockController : ControllerBase
     /// 
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="stock"></param>
+    /// <param name="article"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ArticleResponseModel), StatusCodes.Status200OK)]
-    public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ArticleRequestModel stock)
+    public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ArticleRequestModel article)
     {
-        var stockEntity = await _stockRepository.FindAsync(id);
-        if (stock == null) throw new Exception("Không tìm thấy stock");
+        var articleEntity = await _articleRepository.FindAsync(id);
+        if (article == null) throw new Exception("Không tìm thấy article");
 
-        var result = await _stockRepository.SaveAsync(stockEntity);
+        var result = await _articleRepository.SaveAsync(articleEntity, string.Empty);
         var res = result.ToArticleResponseModel();
         return Ok(res);
     }
@@ -67,15 +67,15 @@ public class StockController : ControllerBase
     [ProducesResponseType(typeof(Pagination<ArticleResponseModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync([FromBody] ArticleQueryModel queryModel)
     {
-        var stocks = await _stockRepository.GetAllAsync(queryModel);
-        var res = stocks.Items.Select(x => ArticleMapper.ToArticleResponseModel(x));
+        var articles = await _articleRepository.GetAllAsync(queryModel);
+        var res = articles.Items.Select(x => ArticleMapper.ToArticleResponseModel(x));
         return Ok(
             new Pagination<ArticleResponseModel>(
                 res,
-                stocks.TotalCount,
-                stocks.TotalPage,
-                stocks.CurrentPage,
-                stocks.PageSize)
+                articles.TotalCount,
+                articles.TotalPage,
+                articles.CurrentPage,
+                articles.PageSize)
         );
     }
 
@@ -89,9 +89,9 @@ public class StockController : ControllerBase
     [ProducesResponseType(typeof(ArticleResponseModel), StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteAsync(Guid id)
     {
-        var stock = await _stockRepository.DeleteAsync(id);
-        if (stock == null) throw new Exception("Không tìm thấy stock");
-        var res = stock.ToArticleResponseModel();
+        var article = await _articleRepository.DeleteAsync(id);
+        if (article == null) throw new Exception("Không tìm thấy article");
+        var res = article.ToArticleResponseModel();
         return Ok(res);
     }
 }

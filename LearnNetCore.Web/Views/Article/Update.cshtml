@@ -1,0 +1,36 @@
+﻿@model LearnNetCore.Application.Models.ArticleRequestModel
+
+@{
+    ViewData["Title"] = "Article";
+}
+
+<h1>Article</h1>
+
+<form asp-action="UpdateOrCreate" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" name="Title" class="form-control" value="@Model.Title" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-2">
+        <label asp-for="Content" class="control-label"></label>
+        <textarea asp-for="Content" name="Content" class="form-control"> @Model.Content</textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="row justify-content-end mt-2">
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            @if (Model.Id != null)
+            {
+                <a href="@Url.Action("Delete")" class="btn btn-danger">Delete</a>
+
+            }
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+        </div>
+
+    </div>
+</form>
+

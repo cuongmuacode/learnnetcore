@@ -28,7 +28,7 @@ namespace LearnNetCore.Web
             ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             builder.Services.AddAuthentication();
             builder.Services.AddAuthorization();
-            builder.Services.AddLearnNetCoreServices(configuration);
+            builder.Services.AddLearnNetCoreDbServices(configuration);
 
             var app = builder.Build();
 

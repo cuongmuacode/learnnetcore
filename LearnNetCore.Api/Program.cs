@@ -124,7 +124,7 @@ public class Program
             options => options.FallbackPolicy =
                 new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()
         );
-        builder.Services.AddLearnNetCoreServices(configuration);
+        builder.Services.AddLearnNetCoreDbServices(configuration);
 
 
         var app = builder.Build();

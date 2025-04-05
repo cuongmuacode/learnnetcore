@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LearnNetCore.Application;
+using LearnNetCore.Application.Articles;
+using LearnNetCore.EntityFrameworkCore.Articles;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +18,10 @@ public static class ServiceCollectionExtensions
         {
             options.UseSqlServer(connectionString);
         });
+
+        services.AddScoped<IArticleRepository, ArticleRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddLearnNetCoreServices(configuration);
         return services;
     }
 }

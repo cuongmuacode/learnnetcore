@@ -1,11 +1,12 @@
-﻿using LearnNetCore.Application.Articles;
+﻿using LearnNetCore.Application;
+using LearnNetCore.Application.Articles;
 using LearnNetCore.Application.Cache;
+using LearnNetCore.Application.Extensions;
 using LearnNetCore.Application.Models;
 using LearnNetCore.Domain;
-using LearnNetCore.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace LearnNetCore.Application;
+namespace LearnNetCore.EntityFrameworkCore.Articles;
 
 public class ArticleRepository : IArticleRepository
 {
@@ -54,20 +55,15 @@ public class ArticleRepository : IArticleRepository
         {
             query = query.Where(x => x.Id == queryModel.Id.Value);
         }
-        var totalCount = await query.CountAsync();
-
-        var items = await query
-            .OrderBy(x => x.Id)
-            .Skip(queryModel.CurrentPage)
-            .Take(queryModel.PageSize).ToListAsync();
-
-        return new Pagination<ArticleEntity>(
-            items,
-            totalCount,
-            (int)Math.Ceiling((double)totalCount / queryModel.PageSize),
-            queryModel.CurrentPage,
-            queryModel.PageSize);
-
+        if (!string.IsNullOrWhiteSpace(queryModel.FullTextSearch))
+        {
+            var ts = queryModel.FullTextSearch;
+            query = query.Where(q =>
+                q.Content!.Contains(ts) || q.Title.Contains(ts));
+        }
+        queryModel.Sort ??= "Id";
+        query.OrderBy(x => x.Id);
+        return await query.Page(queryModel.CurrentPage, queryModel.PageSize, queryModel.Sort);
     }
 
     public async Task<ArticleEntity> SaveAsync(ArticleEntity article, string userId)
@@ -75,18 +71,21 @@ public class ArticleRepository : IArticleRepository
         var exist = await FindWithoutCacheAsync(article.Id);
         if (exist == null)
         {
-            article.UserId = userId;
+            article.CreatedOnDate = DateTime.Now;
+            article.CreatedUserId = userId;
+            article.LastModifiedOnDate = DateTime.Now;
+            article.LastModifiedUserId = userId;
             exist = article;
             _dbContext.Articles.Add(article);
         }
         else
         {
-            exist.CreatedOnDate = article.CreatedOnDate;
             exist.Content = article.Content;
             exist.Title = article.Title;
-            exist.LastModifiedOnDate = article.LastModifiedOnDate;
-            exist.UserId = userId;
-
+            exist.CreatedOnDate = article.CreatedOnDate;
+            exist.LastModifiedOnDate = DateTime.Now;
+            exist.CreatedUserId = article.CreatedUserId;
+            exist.LastModifiedUserId = userId;
             _dbContext.Articles.Update(exist);
         }
         await _dbContext.SaveChangesAsync();

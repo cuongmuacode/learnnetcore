@@ -1,18 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LearnNetCore.Domain
+namespace LearnNetCore.Domain;
+
+[Table("Articles")]
+public class ArticleEntity : IIdEntity
 {
-    [Table("Articles")]
-    public class ArticleEntity
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public DateTime CreatedOnDate { get; set; }
-        public DateTime LastModifiedOnDate { get; set; }
-        public string UserId { get; set; }
-    }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
+    [Required]
+    public string Title { get; set; } = string.Empty;
+    public string? Content { get; set; }
+    public DateTime? CreatedOnDate { get; set; }
+    public DateTime? LastModifiedOnDate { get; set; }
+    public string? CreatedUserId { get; set; }
+    public string? LastModifiedUserId { get; set; }
 }

@@ -10,12 +10,15 @@ public class CategoryEntity
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     [StringLength(50)]
-    public string Code { get; set; }
+    public string Code { get; set; } = string.Empty;
     [Required]
     [StringLength(255)]
     public string Name { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
-    public string Description { get; set; }
-    public string UserId { get; set; }
+    public string? Description { get; set; }
+    public DateTime? CreatedOnDate { get; set; }
+    public DateTime? LastModifiedOnDate { get; set; }
+    public string? CreatedUserId { get; set; }
+    public string? LastModifiedUserId { get; set; }
 
 }

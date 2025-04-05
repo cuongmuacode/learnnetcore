@@ -2,6 +2,13 @@
 
 public class Pagination<T>
 {
+    public Pagination(int totalCount, int currentPage, int pageSize)
+    {
+        TotalCount = totalCount;
+        TotalPage = (int)Math.Ceiling((double)totalCount / pageSize);
+        CurrentPage = currentPage;
+        PageSize = pageSize;
+    }
     public Pagination(IEnumerable<T> items, int totalCount, int currentPage, int pageSize)
     {
         Items = items;
@@ -18,10 +25,10 @@ public class Pagination<T>
         CurrentPage = currentPage;
         PageSize = pageSize;
     }
-    public int TotalCount { get; }
-    public int TotalPage { get; }
-    public int CurrentPage { get; }
-    public int PageSize { get; }
-    public IEnumerable<T> Items { get; }
+    public int TotalCount { get; set; }
+    public int TotalPage { get; set; }
+    public int CurrentPage { get; set; }
+    public int PageSize { get; set; }
+    public IEnumerable<T>? Items { get; set; }
 }
 

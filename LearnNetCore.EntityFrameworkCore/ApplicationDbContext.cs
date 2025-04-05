@@ -14,16 +14,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<ArticleEntity> Articles { get; set; }
     public DbSet<CategoryEntity> Categories { get; set; }
+    public DbSet<RelationEntity> Relations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        List<IdentityRole> identityRoles = new List<IdentityRole>
-        {
-            new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
-            new IdentityRole { Name = "User", NormalizedName = "USER" }
-        };
-        builder.Entity<IdentityRole>().HasData(identityRoles);
     }
 }

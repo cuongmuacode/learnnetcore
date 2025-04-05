@@ -9,7 +9,7 @@ public static class ArticleMapper
     {
         return new ArticleEntity
         {
-            Id = model.Id,
+            Id = model.Id ?? Guid.NewGuid(),
             Content = model.Content,
             CreatedOnDate = model.CreatedOnDate,
             LastModifiedOnDate = model.LastModifiedOnDate,
