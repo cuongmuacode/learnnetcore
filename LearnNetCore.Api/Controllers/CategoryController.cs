@@ -2,6 +2,7 @@
 using LearnNetCore.Application.Articles;
 using LearnNetCore.Application.Mappers;
 using LearnNetCore.Application.Models;
+using LearnNetCore.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LearnNetCore.Api.Controllers;
@@ -63,18 +64,17 @@ public class CategoryController : ControllerBase
     /// <param name="queryModel"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    [ProducesResponseType(typeof(Pagination<CategoryResponseModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginationResponse<CategoryResponseModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync([FromBody] CategoryQueryModel queryModel)
     {
         var comments = await _categoryRepository.GetAllAsync(queryModel);
-        var res = comments.Items.Select(x => x.ToCategoryResponseModel());
+        var res = comments?.Items?.Select(x => x.ToCategoryResponseModel());
         return Ok(
-            new Pagination<CategoryResponseModel>(
-                res,
-                comments.TotalCount,
-                comments.TotalPage,
-                comments.CurrentPage,
-                comments.PageSize)
+            new PaginationResponse<CategoryResponseModel>()
+            {
+                Data = new Pagination<CategoryResponseModel>(
+                    res, comments.TotalCount, comments.CurrentPage, comments.PageSize),
+            }
         );
     }
 

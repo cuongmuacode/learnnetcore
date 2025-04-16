@@ -5,15 +5,29 @@
     ViewData["Title"] = "Article List";
 }
 
+<div>
+    <form asp-action="Index" method="get" class="">
+        <div class="row mb-4">
+            <div class="col input-group input-group-lg" style="padding:0px">
+                <input type="text"
+                       name="FullTextSearch"
+                       class="form-control me-2"
+                       aria-label="Tìm kiếm"
+                       placeholder="Tìm kiếm bài viết..." />
 
-<form asp-action="Index" method="get" class="mb-4">
-    <div class="input-group">
-        <input type="text" name="FullTextSearch" class="form-control" placeholder="Tìm kiếm bài viết..." />
-        <button class="btn btn-primary" type="submit">
-            Tìm kiếm
-        </button>
-    </div>
-</form>
+            </div>
+
+            <div class="col input-group input-group-lg">
+                <button class="btn btn-outline-primary"
+                        type="submit">
+                    Tìm kiếm
+                </button>
+
+            </div>
+
+        </div>
+    </form>
+</div>
 
 <div class="row">
     @foreach (var article in Model.Articles)
@@ -37,8 +51,8 @@
 </div>
 <a href="@Url.Action("Update", "Article")"
    class="btn btn-primary rounded-circle shadow position-fixed"
-   style="bottom: 30px; right: 30px; width: 60px; height: 60px; z-index: 1000; display: flex; align-items: center; justify-content: center;">
-    new
+   style="bottom: 30px; right: 30px; width: 70px; height: 70px; z-index: 1000; display: flex; align-items: center; justify-content: center;">
+    Tạo mới
 </a>
 
 <div class="row justify-content-end">

@@ -2,6 +2,7 @@
 using LearnNetCore.Application.Exceptions;
 using LearnNetCore.Application.Identities;
 using LearnNetCore.Application.Models;
+using LearnNetCore.Domain;
 using LearnNetCore.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -105,11 +106,10 @@ public class Program
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         context.Response.ContentType = "application/json";
                         var result = JsonSerializer.Serialize(
-                            new Response<string>
+                            new Response
                             {
-                                Detail = context.Error,
                                 StatusCode = context.Response.StatusCode,
-                                Message = "Internal Server Error",
+                                Message = context.Error,
                             }
                         );
 
@@ -119,6 +119,19 @@ public class Program
                 };
             }
          );
+
+        var cors = builder.Configuration.GetSection("Cors").Get<string[]>();
+        Console.WriteLine(cors);
+        builder.Services.AddCors(options =>
+            options.AddPolicy(
+                "AngularApplication",
+                policy =>
+                policy.WithOrigins(cors)
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    .AllowAnyHeader()
+            )
+        );
 
         builder.Services.AddAuthorization(
             options => options.FallbackPolicy =
@@ -144,8 +157,8 @@ public class Program
             });
         }
 
+        app.UseCors("AngularApplication");
         app.MapControllers();
-
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

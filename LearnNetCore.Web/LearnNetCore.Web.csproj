@@ -18,4 +18,9 @@
     <ProjectReference Include="..\LearnNetCore.EntityFrameworkCore\LearnNetCore.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\icons\" />
+  </ItemGroup>
+
 </Project>

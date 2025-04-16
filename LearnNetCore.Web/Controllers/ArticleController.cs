@@ -2,52 +2,53 @@
 using LearnNetCore.Application.Mappers;
 using LearnNetCore.Application.Models;
 using LearnNetCore.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LearnNetCore.Web.Controllers
+namespace LearnNetCore.Web.Controllers;
+
+[Authorize(Roles ="Admin")]
+public class ArticleController : Controller
 {
-    public class ArticleController : Controller
+    private readonly IArticleRepository _articleService;
+
+    public ArticleController(IArticleRepository articleService)
     {
-        private readonly IArticleRepository _articleService;
+        _articleService = articleService;
+    }
 
-        public ArticleController(IArticleRepository articleService)
+    public async Task<IActionResult> Update(Guid? id)
+    {
+        if (id != null)
         {
-            _articleService = articleService;
+            var article = await _articleService.FindAsync(id.Value);
+            return View(article?.ToArticleRequestModel() ?? new ArticleRequestModel());
         }
 
-        public async Task<IActionResult> Update(Guid? id)
+        return View(new ArticleRequestModel());
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateOrCreate(
+         ArticleRequestModel article)
+    {
+        await _articleService.SaveAsync(article.ToArticleEntity(), string.Empty);
+        return RedirectToAction("Index", "Article");
+    }
+
+    public async Task<IActionResult> Index(ArticleQueryModel queryModel)
+    {
+        const int pageSize = 10;
+        var result = await _articleService.GetAllAsync(queryModel);
+        var model = new ArticleViewModel
         {
-            if (id != null)
-            {
-                var article = await _articleService.FindAsync(id.Value);
-                return View(article?.ToArticleRequestModel() ?? new ArticleRequestModel());
-            }
+            Articles = result?.Items?.Select(x =>
+                x.ToArticleResponseModel())?.ToList(),
+            CurrentPage = queryModel.CurrentPage,
+            TotalPages = result.TotalPage
+        };
 
-            return View(new ArticleRequestModel());
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateOrCreate(
-             ArticleRequestModel article)
-        {
-            await _articleService.SaveAsync(article.ToArticleEntity(), string.Empty);
-            return RedirectToAction("Index", "Article");
-        }
-
-        public async Task<IActionResult> Index(ArticleQueryModel queryModel)
-        {
-            const int pageSize = 10;
-                var result = await _articleService.GetAllAsync(queryModel);
-            var model = new ArticleViewModel
-            {
-                Articles = result?.Items?.Select(x =>
-                    x.ToArticleResponseModel())?.ToList(),
-                CurrentPage = queryModel.CurrentPage,
-                TotalPages = result.TotalPage
-            };
-
-            return View(model);
-        }
+        return View(model);
     }
 }

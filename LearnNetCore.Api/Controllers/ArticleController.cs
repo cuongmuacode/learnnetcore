@@ -2,6 +2,7 @@
 using LearnNetCore.Application.Articles;
 using LearnNetCore.Application.Mappers;
 using LearnNetCore.Application.Models;
+using LearnNetCore.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -64,18 +65,23 @@ public class ArticleController : ControllerBase
     /// <param name="queryModel"></param>
     /// <returns></returns>
     [HttpPost("filter")]
-    [ProducesResponseType(typeof(Pagination<ArticleResponseModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginationResponse<ArticleResponseModel>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllAsync([FromBody] ArticleQueryModel queryModel)
     {
         var articles = await _articleRepository.GetAllAsync(queryModel);
-        var res = articles.Items.Select(x => ArticleMapper.ToArticleResponseModel(x));
+        var res = articles?.Items?.Select(x => ArticleMapper.ToArticleResponseModel(x));
         return Ok(
-            new Pagination<ArticleResponseModel>(
-                res,
-                articles.TotalCount,
-                articles.TotalPage,
-                articles.CurrentPage,
-                articles.PageSize)
+            new PaginationResponse<ArticleResponseModel>()
+            {
+                Data = new Pagination<ArticleResponseModel>(
+                    res,
+                    articles.TotalCount,
+                    articles.TotalPage,
+                    articles.CurrentPage,
+                    articles.PageSize),
+                Message = "Success",
+                StatusCode = 200,
+            }
         );
     }
 

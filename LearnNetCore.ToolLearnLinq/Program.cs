@@ -18,7 +18,7 @@ namespace LearnNetCore.ToolLearnLinq
 
 
 
-            var a = ints.Skip(-2).Take(3);
+            var a = ints.OrderBy(x => x).Skip(20).Take(3);
             foreach (var i in a)
             {
                 Console.WriteLine(i.ToString());

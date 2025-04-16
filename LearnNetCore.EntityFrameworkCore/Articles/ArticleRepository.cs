@@ -25,6 +25,8 @@ public class ArticleRepository : IArticleRepository
         var article = await FindAsync(id);
         if (article == null) return article;
         _dbContext.Articles.Remove(article);
+        await _dbContext.SaveChangesAsync();
+
         InvalidCache(article.Id);
         return article;
     }
@@ -61,9 +63,17 @@ public class ArticleRepository : IArticleRepository
             query = query.Where(q =>
                 q.Content!.Contains(ts) || q.Title.Contains(ts));
         }
-        queryModel.Sort ??= "Id";
-        query.OrderBy(x => x.Id);
-        return await query.Page(queryModel.CurrentPage, queryModel.PageSize, queryModel.Sort);
+
+        var sortExpression = string.Empty;
+        if (string.IsNullOrWhiteSpace(queryModel.Sort))
+        {
+            queryModel.Sort = "-Id";
+        }
+        else
+        {
+            sortExpression = queryModel.Sort;
+        }
+        return await query.GetPagedOrderAsync(queryModel.CurrentPage, queryModel.PageSize, queryModel.Sort);
     }
 
     public async Task<ArticleEntity> SaveAsync(ArticleEntity article, string userId)

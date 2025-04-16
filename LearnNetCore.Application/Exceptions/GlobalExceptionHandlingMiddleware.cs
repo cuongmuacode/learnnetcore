@@ -1,4 +1,5 @@
 ﻿using LearnNetCore.Application.Models;
+using LearnNetCore.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
@@ -29,10 +30,9 @@ public class GlobalExceptionHandlingMiddleware
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
             var result = JsonSerializer.Serialize(
-                new Response<string>
+                new Response
                 {
                     StatusCode = context.Response.StatusCode,
-                    Detail = ex.Message,
                     Message = "Internal Server Error",
                 }
             );

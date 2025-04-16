@@ -1,4 +1,5 @@
-﻿namespace LearnNetCore.Application;
+﻿
+namespace LearnNetCore.Domain;
 
 public class Pagination<T>
 {
@@ -32,3 +33,7 @@ public class Pagination<T>
     public IEnumerable<T>? Items { get; set; }
 }
 
+public class PaginationResponse<T> : Response
+{
+    public Pagination<T> Data { get; set; }
+}
